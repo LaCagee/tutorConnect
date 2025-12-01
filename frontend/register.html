@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TutorConnect - Registro</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card" style="max-width: 600px;">
+      <h1 class="auth-title">📝 Crear Cuenta</h1>
+      
+      <div id="message" style="display: none;"></div>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="nombre">Nombre Completo</label>
+          <input 
+            type="text" 
+            id="nombre" 
+            placeholder="Juan Pérez" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Institucional</label>
+          <input 
+            type="email" 
+            id="email" 
+            placeholder="tu.email@santotomas.cl" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="Mínimo 6 caracteres" 
+            required
+            minlength="6"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>¿Qué tipo de usuario eres?</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="rol" value="estudiante" checked>
+              Estudiante
+            </label>
+            <label>
+              <input type="radio" name="rol" value="tutor">
+              Tutor
+            </label>
+          </div>
+        </div>
+
+        <!-- Campos adicionales para tutores (ocultos por defecto) -->
+        <div id="tutorFields" class="hidden">
+          <div class="form-group">
+            <label>Asignaturas que enseñas</label>
+            <div class="checkbox-group" style="flex-direction: column;">
+              <label><input type="checkbox" value="Matemáticas"> Matemáticas</label>
+              <label><input type="checkbox" value="Física"> Física</label>
+              <label><input type="checkbox" value="Química"> Química</label>
+              <label><input type="checkbox" value="Programación"> Programación</label>
+              <label><input type="checkbox" value="Inglés"> Inglés</label>
+              <label><input type="checkbox" value="Estadística"> Estadística</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="precioPorHora">Precio por Hora (CLP)</label>
+            <input 
+              type="number" 
+              id="precioPorHora" 
+              placeholder="5000" 
+              min="0"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="bio">Descripción / Experiencia</label>
+            <textarea 
+              id="bio" 
+              placeholder="Cuéntanos sobre tu experiencia como tutor..."
+            ></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">
+          Crear Cuenta
+        </button>
+      </form>
+
+      <div class="auth-link">
+        ¿Ya tienes cuenta? <a href="index.html">Inicia sesión aquí</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // Mostrar/ocultar campos de tutor según selección
+    const radioButtons = document.querySelectorAll('input[name="rol"]');
+    const tutorFields = document.getElementById('tutorFields');
+
+    radioButtons.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        if (e.target.value === 'tutor') {
+          tutorFields.classList.remove('hidden');
+        } else {
+          tutorFields.classList.add('hidden');
+        }
+      });
+    });
+
+    // Manejar el formulario de registro
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearMessages('message');
+
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const rol = document.querySelector('input[name="rol"]:checked').value;
+
+      // Validar email institucional
+      /*
+      if (!email.endsWith('@santotomas.cl')) {
+        showError('message', 'Debes usar un email institucional (@santotomas.cl)');
+        return;
+      }*/
+
+      // Preparar datos del usuario
+      const userData = {
+        nombre,
+        email,
+        password,
+        rol
+      };
+
+      // Si es tutor, agregar campos adicionales
+      if (rol === 'tutor') {
+        const asignaturas = [];
+        document.querySelectorAll('#tutorFields input[type="checkbox"]:checked').forEach(cb => {
+          asignaturas.push(cb.value);
+        });
+
+        if (asignaturas.length === 0) {
+          showError('message', 'Debes seleccionar al menos una asignatura');
+          return;
+        }
+
+        userData.asignaturas = asignaturas;
+        userData.precioPorHora = document.getElementById('precioPorHora').value || 0;
+        userData.bio = document.getElementById('bio').value || '';
+      }
+
+      try {
+        await register(userData);
+        showSuccess('message', '¡Cuenta creada exitosamente! Redirigiendo al login...');
+        
+        // Redirigir al login después de 2 segundos
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+      } catch (error) {
+        showError('message', error.message);
+      }
+    });
+  </script>
+</body>
+</html>

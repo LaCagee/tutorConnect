@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TutorConnect - Panel Estudiante</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>🎓 TutorConnect - Estudiante</h1>
+    <div class="user-info">
+      <span>Bienvenido, <strong id="userName"></strong></span>
+      <button class="btn btn-danger btn-small" id="logoutBtn">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Sección: Tutores Disponibles -->
+    <div class="section">
+      <h2 class="section-title">📚 Tutores Disponibles</h2>
+      <div class="cards-grid" id="tutoresContainer">
+        <!-- Se llena con JavaScript -->
+        <p class="text-center">Cargando tutores...</p>
+      </div>
+    </div>
+
+    <!-- Sección: Mis Sesiones -->
+    <div class="section">
+      <h2 class="section-title">📅 Mis Sesiones Agendadas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tutor</th>
+            <th>Asignatura</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="sesionesTableBody">
+          <tr><td colspan="6" class="text-center">Cargando sesiones...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal: Agendar Sesión -->
+  <div id="bookingModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Agendar Tutoría</h3>
+        <button class="close-modal" onclick="cerrarModalAgendar()">&times;</button>
+      </div>
+
+      <p><strong>Tutor:</strong> <span id="tutorSeleccionado"></span></p>
+      <p><strong>Precio:</strong> <span id="precioSeleccionado"></span></p>
+
+      <form id="bookingForm">
+        <div class="form-group">
+          <label for="asignatura">Asignatura</label>
+          <select id="asignatura" required>
+            <option value="">Selecciona...</option>
+            <option value="Matemáticas">Matemáticas</option>
+            <option value="Física">Física</option>
+            <option value="Química">Química</option>
+            <option value="Programación">Programación</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Estadística">Estadística</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" required>
+        </div>
+
+        <div class="form-group">
+          <label for="hora">Hora</label>
+          <input type="time" id="hora" required>
+        </div>
+
+        <div class="form-group">
+          <label for="modalidad">Modalidad</label>
+          <select id="modalidad" required>
+            <option value="online">Online</option>
+            <option value="presencial">Presencial</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="notas">Notas / Temas a revisar (opcional)</label>
+          <textarea id="notas" placeholder="Ej: Necesito ayuda con derivadas..."></textarea>
+        </div>
+
+        <div class="flex gap-10">
+          <button type="button" class="btn btn-danger" onclick="cerrarModalAgendar()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Agendar Sesión</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Valorar Sesión -->
+  <div id="reviewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Valorar Tutoría</h3>
+        <button class="close-modal" onclick="cerrarModalReview()">&times;</button>
+      </div>
+
+      <form id="reviewForm">
+        <div class="form-group">
+          <label>Calificación</label>
+          <div class="stars">
+            <span class="star" id="star1" onclick="setRating(1)">★</span>
+            <span class="star" id="star2" onclick="setRating(2)">★</span>
+            <span class="star" id="star3" onclick="setRating(3)">★</span>
+            <span class="star" id="star4" onclick="setRating(4)">★</span>
+            <span class="star" id="star5" onclick="setRating(5)">★</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="comentario">Comentario (opcional)</label>
+          <textarea id="comentario" placeholder="Comparte tu experiencia..."></textarea>
+        </div>
+
+        <div class="flex gap-10">
+          <button type="button" class="btn btn-danger" onclick="cerrarModalReview()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Enviar Valoración</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/estudiante.js"></script>
+</body>
+</html>

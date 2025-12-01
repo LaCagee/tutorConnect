@@ -1,0 +1,37 @@
+{
+  "name": "tutorconnect",
+  "version": "1.0.0",
+  "description": "Sistema de tutoría entre estudiantes - Arquitectura de Microservicios",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "cd services/user-service && npm install && cd ../tutoring-service && npm install && cd ../review-service && npm install && cd ../notification-service && npm install && cd ../../api-gateway && npm install",
+    "start:user": "cd services/user-service && npm start",
+    "start:tutoring": "cd services/tutoring-service && npm start",
+    "start:review": "cd services/review-service && npm start",
+    "start:notification": "cd services/notification-service && npm start",
+    "start:gateway": "cd api-gateway && npm start",
+    "dev:user": "cd services/user-service && npm run dev",
+    "dev:tutoring": "cd services/tutoring-service && npm run dev",
+    "dev:review": "cd services/review-service && npm run dev",
+    "dev:notification": "cd services/notification-service && npm run dev",
+    "dev:gateway": "cd api-gateway && npm run dev"
+  },
+  "keywords": [
+    "microservices",
+    "rabbitmq",
+    "soa",
+    "broker",
+    "tutoring"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "sequelize": "^6.35.0",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

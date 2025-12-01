@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TutorConnect - Panel Tutor</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>👨‍🏫 TutorConnect - Tutor</h1>
+    <div class="user-info">
+      <span>Bienvenido, <strong id="userName"></strong></span>
+      <button class="btn btn-danger btn-small" id="logoutBtn">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Sección: Estadísticas -->
+    <div class="section">
+      <h2 class="section-title">📊 Mis Estadísticas</h2>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statRating">0.00</div>
+          <div class="stat-label">Rating Promedio</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statSesiones">0</div>
+          <div class="stat-label">Tutorías Completadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">Total Valoraciones</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Últimas Valoraciones</h3>
+        </div>
+        <div id="reviewsContainer">
+          <p class="text-center">Cargando valoraciones...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Mis Sesiones -->
+    <div class="section">
+      <h2 class="section-title">📅 Mis Sesiones</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Estudiante</th>
+            <th>Asignatura</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="sesionesTableBody">
+          <tr><td colspan="6" class="text-center">Cargando sesiones...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/tutor.js"></script>
+</body>
+</html>
